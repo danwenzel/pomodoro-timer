@@ -1,3 +1,9 @@
 <div class="flex items-center justify-center h-screen bg-blue-900 2-screen">
-  <Timer @minutes="25" @seconds="00" @label="work" @isPlaying={{false}} />
+  <Timer
+    @minutes={{this.displayMinutes}}
+    @seconds={{this.displaySeconds}}
+    @label="work"
+    @isPlaying={{this.isPlaying}}
+    @togglePlay={{this.togglePlay}}
+  />
 </div>
