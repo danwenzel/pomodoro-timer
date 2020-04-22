@@ -1,5 +1,3 @@
-/*global module*/
-
 module.exports = {
   prefix: '',
   important: false,
@@ -93,7 +91,8 @@ module.exports = {
         600: '#3182ce',
         700: '#2b6cb0',
         800: '#2c5282',
-        900: '#2a4365',
+        900: '#30384c',
+        // 900: '#2a4365',
       },
       indigo: {
         100: '#ebf4ff',
