@@ -1,4 +1,7 @@
-<div class="flex flex-col items-center justify-center font-thin text-white">
+<div
+  class="flex flex-col items-center justify-center font-thin text-white"
+  ...attributes
+>
   <div
     class={{
       concat
@@ -15,7 +18,7 @@
   </div>
   <button
     type="button"
-    class="w-16 h-16 mt-4 text-xl border-2 border-gray-600 rounded-full focus:outline-none hover:border-gray-400"
+    class="w-16 h-16 mt-6 text-xl border-2 border-gray-600 rounded-full focus:outline-none hover:border-gray-400"
     {{on "click" @togglePlay}}
   >
     {{#if @isPlaying}}

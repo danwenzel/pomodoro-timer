@@ -1,6 +1,7 @@
 import Service from '@ember/service';
 import { task } from 'ember-concurrency';
-import { Promise } from 'rsvp';
+import { Promise, resolve } from 'rsvp';
+import { assert } from '@ember/debug';
 
 export default class AudioPlayerService extends Service {
   @task(function* () {
@@ -10,10 +11,21 @@ export default class AudioPlayerService extends Service {
   })
   loadPlayer;
 
-  play(src) {
+  async play(src, { volume = 1 } = {}) {
+    if (!this.loadPlayer.last) {
+      assert(
+        `Must perform audioPlayer's loadPlayer task before attempting to play`
+      );
+
+      return resolve();
+    }
+
+    await this.loadPlayer.last;
+
     return new Promise((resolve) => {
       const sound = new this.Howl({
         src: [src],
+        volume,
         onload() {
           resolve();
         },
