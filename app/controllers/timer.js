@@ -7,11 +7,13 @@ import zeroPadded from '../utils/zero-padded';
 import { inject as service } from '@ember/service';
 
 export default class TimerController extends Controller {
-  pomodoroMinutes = 10;
-  breakMinutes = 5;
-  longBreakMinutes = 10;
   totalPomodoros = 4;
-  secondsPerMinute = 60;
+
+  @readOnly('model.pomodoroSeconds') pomodoroSeconds;
+  @readOnly('model.breakSeconds') breakSeconds;
+  @readOnly('model.longBreakSeconds') longBreakSeconds;
+  @readOnly('model.totalPomodoros') totalPomodoros;
+  @readOnly('startTimer.isRunning') isPlaying;
 
   @tracked currentSeconds;
   @tracked currentMode = 'work';
@@ -21,8 +23,7 @@ export default class TimerController extends Controller {
 
   constructor() {
     super(...arguments);
-
-    this.currentSeconds = this.secondsPerMinute * this.pomodoroMinutes;
+    this.currentSeconds = this.pomodoroSeconds;
 
     this.audioPlayer.loadPlayer.perform();
   }
@@ -34,8 +35,6 @@ export default class TimerController extends Controller {
   get displaySeconds() {
     return zeroPadded(this.currentSeconds % 60);
   }
-
-  @readOnly('startTimer.isRunning') isPlaying;
 
   @action
   togglePlay() {
@@ -50,7 +49,7 @@ export default class TimerController extends Controller {
   reset() {
     this.startTimer.cancelAll();
     this.pomodorosComplete = 0;
-    this.currentSeconds = this.secondsPerMinute * this.pomodoroMinutes;
+    this.currentSeconds = this.pomodoroSeconds;
     this.currentMode = 'work';
   }
 
@@ -82,14 +81,14 @@ export default class TimerController extends Controller {
   async _switchToWorkMode() {
     await this.audioPlayer.play('/assets/audio/tea-bell.mp3');
     this.currentMode = 'work';
-    this.currentSeconds = this.secondsPerMinute * this.pomodoroMinutes;
+    this.currentSeconds = this.pomodoroSeconds;
   }
 
   async _switchToBreakMode() {
     await this.audioPlayer.play('/assets/audio/birds-tweet.mp3');
     window.alert('Time for a short break!');
     this.currentMode = 'break';
-    this.currentSeconds = this.secondsPerMinute * this.breakMinutes;
+    this.currentSeconds = this.breakSeconds;
     this.startTimer.perform();
   }
 
@@ -99,7 +98,7 @@ export default class TimerController extends Controller {
     });
     window.alert('You did it! Reward yourself with a long break.');
     this.currentMode = 'break';
-    this.currentSeconds = this.secondsPerMinute * this.longBreakMinutes;
+    this.currentSeconds = this.longBreakSeconds;
     this.pomodorosComplete = 0;
     this.startTimer.perform();
   }
