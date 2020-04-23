@@ -1,4 +1,4 @@
-import Controller from '@ember/controller';
+import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { readOnly } from '@ember/object/computed';
@@ -6,7 +6,7 @@ import { task, timeout } from 'ember-concurrency';
 import zeroPadded from '../utils/zero-padded';
 import { inject as service } from '@ember/service';
 
-export default class TimerController extends Controller {
+export default class TimerContainerComponent extends Component {
   totalPomodoros = 4;
 
   @readOnly('model.pomodoroSeconds') pomodoroSeconds;
