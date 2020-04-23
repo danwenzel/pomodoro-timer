@@ -9,10 +9,10 @@ import { inject as service } from '@ember/service';
 export default class TimerContainerComponent extends Component {
   totalPomodoros = 4;
 
-  @readOnly('model.pomodoroSeconds') pomodoroSeconds;
-  @readOnly('model.breakSeconds') breakSeconds;
-  @readOnly('model.longBreakSeconds') longBreakSeconds;
-  @readOnly('model.totalPomodoros') totalPomodoros;
+  @readOnly('args.pomodoroSeconds') pomodoroSeconds;
+  @readOnly('args.breakSeconds') breakSeconds;
+  @readOnly('args.longBreakSeconds') longBreakSeconds;
+  @readOnly('args.totalPomodoros') totalPomodoros;
   @readOnly('startTimer.isRunning') isPlaying;
 
   @tracked currentSeconds;
@@ -56,7 +56,7 @@ export default class TimerContainerComponent extends Component {
   @task(function* () {
     while (true) {
       yield timeout(1000);
-      this.decrementProperty('currentSeconds');
+      this.currentSeconds--;
       if (this.currentSeconds <= 0) {
         yield this._endMode();
         return;
