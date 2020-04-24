@@ -5,7 +5,8 @@
     class="flex-1 sm:flex-none"
     @minutes={{this.displayMinutes}}
     @seconds={{this.displaySeconds}}
-    @label={{this.currentMode}}
+    @mode={{this.currentMode.type}}
+    @label={{this.currentMode.label}}
     @isPlaying={{this.isPlaying}}
     @togglePlay={{this.togglePlay}}
   />

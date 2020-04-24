@@ -5,6 +5,22 @@ import { readOnly } from '@ember/object/computed';
 import { task, timeout } from 'ember-concurrency';
 import zeroPadded from '../utils/zero-padded';
 import { inject as service } from '@ember/service';
+import config from '../config/environment';
+
+const MODES = {
+  work: {
+    type: 'work',
+    label: 'work',
+  },
+  break: {
+    type: 'break',
+    label: 'short break',
+  },
+  longBreak: {
+    type: 'break',
+    label: 'long break',
+  },
+};
 
 export default class TimerContainerComponent extends Component {
   totalPomodoros = 4;
@@ -16,7 +32,7 @@ export default class TimerContainerComponent extends Component {
   @readOnly('startTimer.isRunning') isPlaying;
 
   @tracked currentSeconds;
-  @tracked currentMode = 'work';
+  @tracked currentMode = MODES.work;
   @tracked pomodorosComplete = 0;
 
   @service audioPlayer;
@@ -50,12 +66,12 @@ export default class TimerContainerComponent extends Component {
     this.startTimer.cancelAll();
     this.pomodorosComplete = 0;
     this.currentSeconds = this.pomodoroSeconds;
-    this.currentMode = 'work';
+    this.currentMode = MODES.work;
   }
 
   @task(function* () {
     while (true) {
-      yield timeout(1000);
+      yield timeout(config.msPerSecond);
       this.currentSeconds--;
       if (this.currentSeconds <= 0) {
         yield this._endMode();
@@ -66,8 +82,8 @@ export default class TimerContainerComponent extends Component {
   startTimer;
 
   async _endMode() {
-    if (this.currentMode === 'work') {
-      this.incrementProperty('pomodorosComplete');
+    if (this.currentMode === MODES.work) {
+      this.pomodorosComplete++;
       if (this.pomodorosComplete >= this.totalPomodoros) {
         await this._switchToLongBreakMode();
       } else {
@@ -80,26 +96,22 @@ export default class TimerContainerComponent extends Component {
 
   async _switchToWorkMode() {
     await this.audioPlayer.play('/assets/audio/tea-bell.mp3');
-    this.currentMode = 'work';
+    this.currentMode = MODES.work;
     this.currentSeconds = this.pomodoroSeconds;
   }
 
   async _switchToBreakMode() {
     await this.audioPlayer.play('/assets/audio/birds-tweet.mp3');
-    window.alert('Time for a short break!');
-    this.currentMode = 'break';
+    this.currentMode = MODES.break;
     this.currentSeconds = this.breakSeconds;
-    this.startTimer.perform();
   }
 
   async _switchToLongBreakMode() {
     await this.audioPlayer.play('/assets/audio/ff3-fanfare.mp3', {
       volume: 0.5,
     });
-    window.alert('You did it! Reward yourself with a long break.');
-    this.currentMode = 'break';
+    this.currentMode = MODES.longBreak;
     this.currentSeconds = this.longBreakSeconds;
     this.pomodorosComplete = 0;
-    this.startTimer.perform();
   }
 }
