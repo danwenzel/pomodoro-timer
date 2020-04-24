@@ -9,16 +9,17 @@
       this.circleColor
     }}
   >
-    <div class="mt-4 font-mono text-5xl">
+    <div class="mt-4 font-mono text-5xl" data-test-timer-time>
       {{@minutes}}:{{@seconds}}
     </div>
-    <div class="mt-3 text-base uppercase">
+    <div class="mt-3 text-base uppercase" data-test-timer-label>
       {{@label}}
     </div>
   </div>
   <button
     type="button"
     class="w-16 h-16 mt-6 text-xl border-2 border-gray-600 rounded-full focus:outline-none hover:border-gray-400"
+    data-test-toggle-play-button
     {{on "click" @togglePlay}}
   >
     {{#if @isPlaying}}
