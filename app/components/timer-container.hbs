@@ -9,10 +9,12 @@
     @label={{this.currentMode.label}}
     @isPlaying={{this.isPlaying}}
     @togglePlay={{this.togglePlay}}
+    @isAbandonable={{this.isAbandonable}}
+    @abandon={{this.abandon}}
   />
   <div class="flex justify-between w-full max-w-sm mt-6 text-white">
     <div class="flex flex-col items-center">
-      <span>
+      <span data-test-pomodoros-complete>
         {{this.pomodorosComplete}}/{{this.totalPomodoros}}
       </span>
       <a

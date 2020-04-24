@@ -52,6 +52,13 @@ export default class TimerContainerComponent extends Component {
     return zeroPadded(this.currentSeconds % 60);
   }
 
+  get isAbandonable() {
+    return (
+      this.currentMode.type === 'work' &&
+      this.currentSeconds < this.pomodoroSeconds
+    );
+  }
+
   @action
   togglePlay() {
     if (this.isPlaying) {
@@ -59,6 +66,13 @@ export default class TimerContainerComponent extends Component {
     } else {
       this.startTimer.perform();
     }
+  }
+
+  @action
+  abandon() {
+    this.audioPlayer.play('/assets/audio/price-is-right-losing-horn.mp3');
+    this.startTimer.cancelAll();
+    this.currentSeconds = this.pomodoroSeconds;
   }
 
   @action
