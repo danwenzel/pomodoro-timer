@@ -18,11 +18,13 @@
 /npm-debug.log*
 /testem.log
 /yarn-error.log
+.DS_Store
 
 # ember-try
 /.node_modules.ember-try/
 /bower.json.ember-try
 /package.json.ember-try
+
+# code editors
 .vscode/settings.json
 jsconfig.json
-public/assets/.DS_Store
