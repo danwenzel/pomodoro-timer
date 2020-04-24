@@ -1,5 +1,19 @@
 'use strict';
 
+const pomodoroDefaults = {
+  pomodoroSeconds: 25 * 60,
+  breakSeconds: 5 * 60,
+  longBreakSeconds: 25 * 60,
+  totalPomodoros: 4,
+};
+
+const pomodoroFast = {
+  pomodoroSeconds: 5,
+  breakSeconds: 2,
+  longBreakSeconds: 7,
+  totalPomodoros: 4,
+};
+
 module.exports = function (environment) {
   let ENV = {
     modulePrefix: 'pomodoro-timer',
@@ -16,6 +30,13 @@ module.exports = function (environment) {
         Date: false,
       },
     },
+
+    msPerSecond: 1000,
+
+    pomodoroDefaults:
+      process.env.DEBUG || environment === 'test'
+        ? pomodoroFast
+        : pomodoroDefaults,
 
     APP: {
       // Here you can pass flags/options to your application instance
@@ -41,6 +62,9 @@ module.exports = function (environment) {
 
     ENV.APP.rootElement = '#ember-testing';
     ENV.APP.autoboot = false;
+
+    // make timers super fast in tests;
+    ENV.msPerSecond = 1;
   }
 
   if (environment === 'production') {
