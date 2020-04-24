@@ -1,58 +1,66 @@
-# pomodoro-timer
+# Pomodoro Timer
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+An Ember application that implements a [Pomodoro Timer](https://en.wikipedia.org/wiki/Pomodoro_Technique).
 
-## Prerequisites
+<img src="./readme_images/screenshot.png" alt="screen shot" width=300/>
 
-You will need the following things properly installed on your computer.
+## Running
 
-* [Git](https://git-scm.com/)
-* [Node.js](https://nodejs.org/)
-* [Yarn](https://yarnpkg.com/)
-* [Ember CLI](https://ember-cli.com/)
-* [Google Chrome](https://google.com/chrome/)
+- `yarn`
+- `yarn start`
+- visit http://localhost:4200/
 
-## Installation
+### Debug Mode
 
-* `git clone <repository-url>` this repository
-* `cd pomodoro-timer`
-* `yarn install`
+Use debug mode for reduced time intervals, so you can try out the full flow much faster:
 
-## Running / Development
+`DEBUG=true yarn start`
 
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
-* Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
+## Tests
 
-### Code Generators
+`yarn test`
 
-Make use of the many generators for code, try `ember help generate` for more details
+Included is a full end-to-end test.  Add `this.pauseTest()` anywhere within that test to play around.
 
-### Running Tests
+## Additional User Story
 
-* `ember test`
-* `ember test --server`
+The additional user story I implemented was:
 
-### Linting
+> As a User, I can abandon a pomodoro after it has started
 
-* `yarn lint:hbs`
-* `yarn lint:js`
-* `yarn lint:js --fix`
+According to the Pomodoro technique, if you are interrupted during a pomodoro,
+you are supposed to either record and postpone, or abondon the pomodoro and
+start it over. I like the abandon approach, since it forces you to restart and
+experience the full time period of uninterrupted work.
 
-### Building
+So with this feature on the app, after the pomodoro interval has started, there
+is a red X button that - when clicked - resets the current pomodoro to the full
+time amount.
 
-* `ember build` (development)
-* `ember build --environment production` (production)
 
-### Deploying
+## Time Intervals
 
-Specify what it takes to deploy your app.
+The default time intervals are:
 
-## Further Reading / Useful Links
+- Pomodoro: 25 minutes
+- Break: 5 minutes
+- Long Break: 25 minutes
 
-* [ember.js](https://emberjs.com/)
-* [ember-cli](https://ember-cli.com/)
-* Development Browser Extensions
-  * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
+These intervals are defined in `config/environment.js`, which are then loaded into
+the model hook of `app/routes/timer.js`. As mentioned above, setting `DEBUG=true`
+causes the intervals to be much shorter:
+
+- Pomodoro: 5 seconds
+- Break: 2 seconds
+- Long Break: 7 seconds
+
+In the test environment, these debug time intervals are also used. In addition,
+the speed is increased significantly, so tests run very fast.
+
+## Future Features/Improvements
+
+- Allow the user to set their preferred intervals and total pomodoros per cycle.
+These preferences could be saved on a backend service, and then loaded into the timer route
+- Turn the colored circle into a progress circle
+- Add more tests, especially for the components
+- Use better icons for the pause and play buttons
