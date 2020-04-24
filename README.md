@@ -8,6 +8,7 @@ An Ember application that implements a [Pomodoro Timer](https://en.wikipedia.org
 
 - `yarn`
 - `yarn start`
+- Make sure your volume isn't turned up too high! :)
 - visit http://localhost:4200/
 
 ### Debug Mode
