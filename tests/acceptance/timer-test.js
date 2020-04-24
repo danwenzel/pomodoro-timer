@@ -3,7 +3,7 @@ import { visit, currentURL, click, waitFor } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import config from '../../config/environment';
 
-const workTimeDisplay = `00:0${config.pomodoroDefaults.pomodoroSeconds}`;
+const workTimeDisplay = `00:0${config.pomodoroDefaults.workSeconds}`;
 const breakTimeDisplay = `00:0${config.pomodoroDefaults.breakSeconds}`;
 const longBreakTimeDisplay = `00:0${config.pomodoroDefaults.longBreakSeconds}`;
 

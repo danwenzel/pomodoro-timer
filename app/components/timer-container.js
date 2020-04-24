@@ -25,7 +25,7 @@ const MODES = {
 export default class TimerContainerComponent extends Component {
   totalPomodoros = 4;
 
-  @readOnly('args.pomodoroSeconds') pomodoroSeconds;
+  @readOnly('args.workSeconds') workSeconds;
   @readOnly('args.breakSeconds') breakSeconds;
   @readOnly('args.longBreakSeconds') longBreakSeconds;
   @readOnly('args.totalPomodoros') totalPomodoros;
@@ -39,7 +39,7 @@ export default class TimerContainerComponent extends Component {
 
   constructor() {
     super(...arguments);
-    this.currentSeconds = this.pomodoroSeconds;
+    this.currentSeconds = this.workSeconds;
 
     this.audioPlayer.loadPlayer.perform();
   }
@@ -54,8 +54,7 @@ export default class TimerContainerComponent extends Component {
 
   get isAbandonable() {
     return (
-      this.currentMode.type === 'work' &&
-      this.currentSeconds < this.pomodoroSeconds
+      this.currentMode.type === 'work' && this.currentSeconds < this.workSeconds
     );
   }
 
@@ -72,14 +71,14 @@ export default class TimerContainerComponent extends Component {
   abandon() {
     this.audioPlayer.play('/assets/audio/price-is-right-losing-horn.mp3');
     this.startTimer.cancelAll();
-    this.currentSeconds = this.pomodoroSeconds;
+    this.currentSeconds = this.workSeconds;
   }
 
   @action
   reset() {
     this.startTimer.cancelAll();
     this.pomodorosComplete = 0;
-    this.currentSeconds = this.pomodoroSeconds;
+    this.currentSeconds = this.workSeconds;
     this.currentMode = MODES.work;
   }
 
@@ -111,7 +110,7 @@ export default class TimerContainerComponent extends Component {
   async _switchToWorkMode() {
     await this.audioPlayer.play('/assets/audio/tea-bell.mp3');
     this.currentMode = MODES.work;
-    this.currentSeconds = this.pomodoroSeconds;
+    this.currentSeconds = this.workSeconds;
   }
 
   async _switchToBreakMode() {

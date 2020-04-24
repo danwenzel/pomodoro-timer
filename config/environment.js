@@ -1,14 +1,14 @@
 'use strict';
 
 const pomodoroDefaults = {
-  pomodoroSeconds: 25 * 60,
+  workSeconds: 25 * 60,
   breakSeconds: 5 * 60,
   longBreakSeconds: 25 * 60,
   totalPomodoros: 4,
 };
 
 const pomodoroFast = {
-  pomodoroSeconds: 5,
+  workSeconds: 5,
   breakSeconds: 2,
   longBreakSeconds: 7,
   totalPomodoros: 4,
