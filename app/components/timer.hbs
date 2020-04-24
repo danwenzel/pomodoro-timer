@@ -21,7 +21,7 @@
     <div class="flex justify-center flex-1">
       <button
         type="button"
-        class="w-16 h-16 mt-6 text-xl border-2 border-gray-600 rounded-full focus:outline-none hover:border-gray-400"
+        class="w-16 h-16 mt-6 text-xl border-2 border-gray-600 rounded-full focus:outline-none focus:border-gray-500 hover:border-gray-400"
         data-test-toggle-play-button
         {{on "click" @togglePlay}}
       >
@@ -36,7 +36,7 @@
       {{#if @isAbandonable}}
         <button
           type="button"
-          class="w-16 h-16 mt-6 ml-2 text-xl text-red-700 border-2 border-red-700 rounded-full focus:outline-none hover:border-red-400"
+          class="w-16 h-16 mt-6 ml-2 text-xl text-red-700 border-2 border-red-700 rounded-full focus:border-red-500 focus:outline-none hover:border-red-400"
           title="abandon"
           data-test-abandon
           {{on "click" @abandon}}
